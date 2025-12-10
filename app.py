@@ -1,8 +1,15 @@
 import streamlit as st
+from dotenv import load_dotenv
+from typing import Literal
+
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from typing import Literal
-def get_expert_response(input_text: str, expert_type: Literal['近代美術家', '書家', '歴史家', '陶芸家', '古物鑑定士']) -> str:
+
+def get_expert_response(
+    input_text: str,
+    expert_type: Literal['近代美術家', '書家', '歴史家', '陶芸家', '古物鑑定士']
+) -> str:
+
     system_messages = {
         '近代美術家': "あなたは優れた近代美術家です。芸術の歴史や技法に精通しており、創造的な視点で質問に答えます。",
         '書家': "あなたは熟練した書家です。書道の技術や歴史に詳しく、美しい文字を書く方法について助言します。",
@@ -11,20 +18,29 @@ def get_expert_response(input_text: str, expert_type: Literal['近代美術家',
         '古物鑑定士': "あなたは信頼できる古物鑑定士です。骨董品や歴史的なアイテムの価値や真贋について専門的な知識を持っています。"
     }
     
-    chat = ChatOpenAI(temperature=0)
+    chat = ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0
+    )
+
     messages = [
         SystemMessage(content=system_messages[expert_type]),
         HumanMessage(content=input_text)
     ]
-    response = chat(messages)
+
+    response = chat.invoke(messages)
     return response.content
 
+
 st.title("専門家に質問しよう！")
+
 expert_type = st.radio(
     "専門家の種類を選んでください:",
     ('近代美術家', '書家', '歴史家', '陶芸家', '古物鑑定士')
 )
+
 input_text = st.text_input("質問を入力してください:")
+
 if st.button("送信"):
     if input_text:
         answer = get_expert_response(input_text, expert_type)
@@ -32,4 +48,3 @@ if st.button("送信"):
         st.write(answer)
     else:
         st.write("質問を入力してください。")
-from dotenv import load_dotenv
