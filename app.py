@@ -1,5 +1,5 @@
 import streamlit as st
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from typing import Literal
 def get_expert_response(input_text: str, expert_type: Literal['近代美術家', '書家', '歴史家', '陶芸家', '古物鑑定士']) -> str:
