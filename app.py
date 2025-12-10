@@ -1,10 +1,3 @@
-from dotenv import load_dotenv
-
-load_dotenv()
-#画面に入力フォームを1つ用意し、入力フォームから送信したテキストをLangChainを使ってLLMにプロンプトとして渡し、回答結果が画面上に表示される
-#条件①：ラジオボタンでLLMに振る舞わせる専門家の種類を選択できるようにし、Aを選択した場合はAの領域の専門家として、またBを選択した場合はBの領域の専門家としてLLMに振る舞わせるよう、選択値に応じてLLMに渡すプロンプトのシステムメッセージを変える。
-#条件②：用意する専門家の種類は近代美術家、書家、歴史家、陶芸家、古物鑑定士の5種類とする。
-#条件③:「入力テキスト」と「ラジオボタンでの選択値」を引数として受け取り、LLMからの回答を戻り値として返す関数を定義し、利用する
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
